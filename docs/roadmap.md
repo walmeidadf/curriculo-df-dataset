@@ -10,7 +10,7 @@
   - [x] Teste de estresse: Língua Portuguesa (chunks aprovados)
   - [x] Processamento completo: 318 chunks, 10 componentes, 5,3% needs_review → `curriculo_parcial.jsonl`
 - [x] `03_enrich_llm.py` — enriquecimento LLM (Groq/Llama 3.3 70B): 17/17 needs_review resolvidos → `curriculo_completo.jsonl` (0 needs_review)
-- [ ] `04_validate.py` — validação do schema e cobertura
+- [x] `04_validate.py` — validação do schema e cobertura: 318/318 OK, todos os anos cobertos, 0 needs_review
 - [ ] `05_publish_hf.py` — publicação no HuggingFace Hub
 
 ## Fase 2 — Dataset público
