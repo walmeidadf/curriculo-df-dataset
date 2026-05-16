@@ -6,8 +6,8 @@
 - [x] Schema JSON formal (`schema/curriculo_schema.json`)
 - [x] Estrutura do repositório e ambiente uv
 - [x] `01_extract_docling.py` — extração PDF → Markdown (2.762 linhas, 2,1 MB; ~2,5 min)
-- [ ] `02_parse_structure.py` — Markdown → JSONL (heurísticas)
-  - [ ] Teste de estresse: Língua Portuguesa (3–5 chunks de exemplo)
+- [x] `02_parse_structure.py` — Markdown → JSONL (heurísticas) — `--preview` validado em LP (38 chunks, 2 needs_review)
+  - [x] Teste de estresse: Língua Portuguesa (chunks aprovados)
   - [ ] Processamento completo do documento
 - [ ] `03_enrich_llm.py` — enriquecimento LLM dos registros ambíguos
 - [ ] `04_validate.py` — validação do schema e cobertura
