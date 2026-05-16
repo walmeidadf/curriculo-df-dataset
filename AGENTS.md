@@ -26,10 +26,11 @@ Resumo rápido (atualizar aqui a cada etapa concluída):
 | Análise dos PDFs e schema | ✅ Concluído |
 | Estrutura do repositório e ambiente | ✅ Concluído |
 | `01_extract_docling.py` | ✅ Concluído |
-| `02_parse_structure.py` | ✅ --preview aprovado / rodar completo |
-| `03_enrich_llm.py` | ⏳ Pendente |
-| `04_validate.py` | ⏳ Pendente |
-| `05_publish_hf.py` | ⏳ Pendente |
+| `02_parse_structure.py` | ✅ Concluído (318 chunks, 0 needs_review) |
+| `03_enrich_llm.py` | ✅ Concluído (17/17 enriquecidos via Groq/Llama 3.3 70B) |
+| `04_validate.py` | ✅ Concluído (318/318 OK, cobertura 100%) |
+| `05_publish_hf.py` | ✅ Concluído (Parquet + JSONL + card publicados) |
+| Gradio Space (`06_gradio_space.py`) | ⏳ Próxima etapa |
 
 ---
 
