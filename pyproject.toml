@@ -1,5 +1,5 @@
 [project]
-name = "curriculo-df-dataset"
+name = "curriculo-ensinofundamental-df"
 version = "0.1.0"
 description = "Pipeline de extração e dataset público do Currículo em Movimento do Distrito Federal – Ensino Fundamental"
 readme = "README.md"
@@ -32,9 +32,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage       = "https://github.com/walmeidadf/curriculo-df-dataset"
+Homepage       = "https://github.com/walmeidadf/curriculo-ensinofundamental-df"
 "HF Dataset"   = "https://huggingface.co/datasets/walmeidadf/curriculo-ensinofundamental-df"
-Issues         = "https://github.com/walmeidadf/curriculo-df-dataset/issues"
+Issues         = "https://github.com/walmeidadf/curriculo-ensinofundamental-df/issues"
 
 [dependency-groups]
 dev = [

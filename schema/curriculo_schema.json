@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/walmeidadf/curriculo-df-dataset/schema/curriculo_schema.json",
+  "$id": "https://github.com/walmeidadf/curriculo-ensinofundamental-df/schema/curriculo_schema.json",
   "title": "Currículo em Movimento do DF – Registro",
   "description": "Schema de cada registro do dataset do Currículo em Movimento do Distrito Federal (Ensino Fundamental, 2ª edição, SEEDF).",
   "type": "object",

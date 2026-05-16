@@ -25,7 +25,7 @@ Este repositório contém o pipeline de extração (PDF → JSONL/Parquet) e o d
 ## Estrutura do repositório
 
 ```
-curriculo-df-dataset/
+curriculo-ensinofundamental-df/
 ├── data/
 │   ├── pdf/          # PDFs originais da SEEDF (não modificados)
 │   ├── extracted/    # Markdown gerado pelo Docling
@@ -88,8 +88,8 @@ Schema completo com validações e exemplos em [`schema/curriculo_schema.json`](
 Requer **Python 3.11+** e [uv](https://docs.astral.sh/uv/getting-started/installation/).
 
 ```bash
-git clone git@github.com:walmeidadf/curriculo-df-dataset.git
-cd curriculo-df-dataset
+git clone git@github.com:walmeidadf/curriculo-ensinofundamental-df.git
+cd curriculo-ensinofundamental-df
 
 # Instalar dependências e criar ambiente virtual
 uv sync
