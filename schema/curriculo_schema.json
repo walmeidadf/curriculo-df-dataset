@@ -1,0 +1,241 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/walmeidadf/curriculo-df-dataset/schema/curriculo_schema.json",
+  "title": "Currículo em Movimento do DF – Registro",
+  "description": "Schema de cada registro do dataset do Currículo em Movimento do Distrito Federal (Ensino Fundamental, 2ª edição, SEEDF).",
+  "type": "object",
+
+  "required": [
+    "id",
+    "tipo_registro",
+    "etapa",
+    "eixos_transversais",
+    "eixos_integradores",
+    "paginas_pdf",
+    "fonte"
+  ],
+
+  "properties": {
+
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "UUID v4 gerado no momento da extração. Imutável após a geração."
+    },
+
+    "tipo_registro": {
+      "type": "string",
+      "enum": ["apresentacao", "curriculo", "referencia"],
+      "description": "Categoria do registro: texto introdutório do componente, linha de currículo (tabela) ou referências bibliográficas."
+    },
+
+    "area_conhecimento": {
+      "type": ["string", "null"],
+      "description": "Área de conhecimento conforme o documento (ex: 'Linguagens', 'Matemática', 'Ciências da Natureza', 'Ciências Humanas', 'Ensino Religioso'). Null apenas para registros de tipo 'apresentacao' que precedam a identificação da área."
+    },
+
+    "componente_curricular": {
+      "type": ["string", "null"],
+      "description": "Componente curricular (ex: 'Língua Portuguesa', 'Arte', 'Matemática', 'Educação Física'). Null apenas em cabeçalhos gerais de área."
+    },
+
+    "sub_componente": {
+      "type": ["string", "null"],
+      "description": "Sub-componente, usado exclusivamente para Arte, que se divide em 'Artes Visuais', 'Música', 'Teatro' e 'Dança'. Null para todos os demais componentes curriculares."
+    },
+
+    "subeixo_componente": {
+      "type": ["string", "null"],
+      "description": "Subeixo de conteúdo dentro da tabela curricular, presente apenas no 2º Ciclo (Anos Iniciais). Exemplos: 'Oralidade', 'Leitura e escuta', 'Escrita/produção de texto', 'Análise linguística/semiótica', 'Geometria', 'Números e Álgebra'. Null para 3º Ciclo (Anos Finais), onde os subeixos são integrados em uma única seção."
+    },
+
+    "etapa": {
+      "type": "string",
+      "const": "Ensino Fundamental",
+      "description": "Etapa de ensino. Fixo neste dataset."
+    },
+
+    "ciclo": {
+      "type": ["string", "null"],
+      "enum": ["2º Ciclo", "3º Ciclo", null],
+      "description": "Ciclo: '2º Ciclo' corresponde aos Anos Iniciais (1º–5º ano) e '3º Ciclo' aos Anos Finais (6º–9º ano). Null para apresentacao e referencia."
+    },
+
+    "bloco": {
+      "type": ["string", "null"],
+      "enum": ["1º Bloco", "2º Bloco", null],
+      "description": "Bloco dentro do ciclo. '1º Bloco' do 2º Ciclo = 1º–3º ano; '2º Bloco' do 2º Ciclo = 4º–5º ano; '1º Bloco' do 3º Ciclo = 6º–7º ano; '2º Bloco' do 3º Ciclo = 8º–9º ano. Null para apresentacao e referencia."
+    },
+
+    "ano_escolar": {
+      "type": ["string", "null"],
+      "description": "Ano escolar específico do registro (ex: '1º Ano', '6º Ano'). Null para tipo_registro 'apresentacao' e 'referencia', e também quando o registro abrange todo o bloco sem distinção por ano.",
+      "examples": ["1º Ano", "2º Ano", "3º Ano", "4º Ano", "5º Ano", "6º Ano", "7º Ano", "8º Ano", "9º Ano"]
+    },
+
+    "eixos_transversais": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Lista dos eixos transversais herdados do cabeçalho da tabela. Normalmente contém os três eixos: 'Educação para a Diversidade', 'Cidadania e Educação em e para os Direitos Humanos', 'Educação para a Sustentabilidade'.",
+      "examples": [
+        ["Educação para a Diversidade", "Cidadania e Educação em e para os Direitos Humanos", "Educação para a Sustentabilidade"]
+      ]
+    },
+
+    "eixos_integradores": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Lista dos eixos integradores herdados do cabeçalho da tabela. No 2º Ciclo: ['Alfabetização', 'Letramentos', 'Ludicidade']. No 3º Ciclo: ['Letramentos', 'Ludicidade'].",
+      "examples": [
+        ["Alfabetização", "Letramentos", "Ludicidade"],
+        ["Letramentos", "Ludicidade"]
+      ]
+    },
+
+    "objetivos": {
+      "type": ["array", "null"],
+      "items": { "type": "string" },
+      "description": "Lista de objetivos de aprendizagem extraídos da coluna 'OBJETIVOS' da tabela. Cada bullet é um item da lista. Sub-bullets (marcados com 'o') são concatenados ao item-pai. Null para tipo_registro 'apresentacao' e 'referencia'."
+    },
+
+    "conteudos": {
+      "type": ["array", "null"],
+      "items": { "type": "string" },
+      "description": "Lista de conteúdos extraídos da coluna 'CONTEÚDOS' da tabela. Cada bullet é um item da lista. Sub-bullets (marcados com 'o') são concatenados ao item-pai como texto adicional separado por '; '. Null para tipo_registro 'apresentacao' e 'referencia'."
+    },
+
+    "texto_livre": {
+      "type": ["string", "null"],
+      "description": "Texto corrido para registros do tipo 'apresentacao' (texto introdutório do componente) e 'referencia' (lista de referências bibliográficas formatada como string). Null para tipo_registro 'curriculo'."
+    },
+
+    "needs_review": {
+      "type": "boolean",
+      "default": false,
+      "description": "Flag de controle interno do pipeline. True quando a extração heurística encontrou ambiguidade e o registro deve ser revisado pelo LLM (etapa 03) ou manualmente. Deve ser false no dataset final publicado."
+    },
+
+    "paginas_pdf": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 1 },
+      "minItems": 1,
+      "description": "Número(s) de página(s) do PDF original de onde o registro foi extraído. Pode abranger múltiplas páginas para registros cujo conteúdo se estende por mais de uma página."
+    },
+
+    "fonte": {
+      "type": "string",
+      "const": "Currículo em Movimento do Distrito Federal – Ensino Fundamental, 2ª edição, SEEDF",
+      "description": "Citação da fonte do documento. Fixo neste dataset."
+    }
+
+  },
+
+  "if": {
+    "properties": { "tipo_registro": { "const": "curriculo" } },
+    "required": ["tipo_registro"]
+  },
+  "then": {
+    "required": ["area_conhecimento", "componente_curricular", "ciclo", "bloco", "ano_escolar"],
+    "properties": {
+      "texto_livre": { "type": "null" },
+      "objetivos": { "type": "array", "minItems": 1 },
+      "conteudos": { "type": "array", "minItems": 1 }
+    }
+  },
+
+  "else": {
+    "if": {
+      "properties": { "tipo_registro": { "enum": ["apresentacao", "referencia"] } },
+      "required": ["tipo_registro"]
+    },
+    "then": {
+      "properties": {
+        "objetivos": { "type": "null" },
+        "conteudos": { "type": "null" },
+        "texto_livre": { "type": "string", "minLength": 1 }
+      }
+    }
+  },
+
+  "examples": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "tipo_registro": "curriculo",
+      "area_conhecimento": "Linguagens",
+      "componente_curricular": "Língua Portuguesa",
+      "sub_componente": null,
+      "subeixo_componente": "Oralidade",
+      "etapa": "Ensino Fundamental",
+      "ciclo": "2º Ciclo",
+      "bloco": "1º Bloco",
+      "ano_escolar": "1º Ano",
+      "eixos_transversais": [
+        "Educação para a Diversidade",
+        "Cidadania e Educação em e para os Direitos Humanos",
+        "Educação para a Sustentabilidade"
+      ],
+      "eixos_integradores": ["Alfabetização", "Letramentos", "Ludicidade"],
+      "objetivos": [
+        "Identificar os diversos falares regionais relacionando-os a aspectos culturais evidenciados em diversos gêneros textuais.",
+        "Apreciar a função de determinadas palavras: verbos (como ação) e adjetivos, em contextos de uso oral."
+      ],
+      "conteudos": [
+        "Diversos falares regionais – diferenças e semelhanças de sentidos de palavras e expressões ligadas a aspectos culturais",
+        "Relatos orais de acontecimentos do cotidiano"
+      ],
+      "texto_livre": null,
+      "needs_review": false,
+      "paginas_pdf": [23, 24],
+      "fonte": "Currículo em Movimento do Distrito Federal – Ensino Fundamental, 2ª edição, SEEDF"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440001",
+      "tipo_registro": "curriculo",
+      "area_conhecimento": "Linguagens",
+      "componente_curricular": "Arte",
+      "sub_componente": "Artes Visuais",
+      "subeixo_componente": null,
+      "etapa": "Ensino Fundamental",
+      "ciclo": "3º Ciclo",
+      "bloco": "1º Bloco",
+      "ano_escolar": "6º Ano",
+      "eixos_transversais": [
+        "Educação para a Diversidade",
+        "Cidadania e Educação em e para os Direitos Humanos",
+        "Educação para a Sustentabilidade"
+      ],
+      "eixos_integradores": ["Letramentos", "Ludicidade"],
+      "objetivos": [
+        "Compreender a evolução do homem a partir da apreciação da arte rupestre brasileira e das demais manifestações artísticas ao longo da história."
+      ],
+      "conteudos": [
+        "Origem e o conceito das Artes Visuais",
+        "Elementos da linguagem visual: cor, ponto, linha, plano, textura, figura, ritmo, volume, proporção, equilíbrio, simetria, bidimensionalidade e tridimensionalidade"
+      ],
+      "texto_livre": null,
+      "needs_review": false,
+      "paginas_pdf": [67],
+      "fonte": "Currículo em Movimento do Distrito Federal – Ensino Fundamental, 2ª edição, SEEDF"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440002",
+      "tipo_registro": "apresentacao",
+      "area_conhecimento": "Linguagens",
+      "componente_curricular": "Língua Portuguesa",
+      "sub_componente": null,
+      "subeixo_componente": null,
+      "etapa": "Ensino Fundamental",
+      "ciclo": null,
+      "bloco": null,
+      "ano_escolar": null,
+      "eixos_transversais": [],
+      "eixos_integradores": [],
+      "objetivos": null,
+      "conteudos": null,
+      "texto_livre": "As primeiras experiências e registros de ensino da Língua Portuguesa no Brasil foram realizados por jesuítas...",
+      "needs_review": false,
+      "paginas_pdf": [17, 18, 19, 20, 21],
+      "fonte": "Currículo em Movimento do Distrito Federal – Ensino Fundamental, 2ª edição, SEEDF"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+# Ambiente Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# uv
+.python-version
+
+# Variáveis de ambiente — NUNCA commitar
+.env
+.env.local
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+
+# Logs do pipeline (gerados automaticamente)
+logs/
+*.log
