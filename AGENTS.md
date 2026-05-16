@@ -25,8 +25,8 @@ Resumo rápido (atualizar aqui a cada etapa concluída):
 |-------|--------|
 | Análise dos PDFs e schema | ✅ Concluído |
 | Estrutura do repositório e ambiente | ✅ Concluído |
-| `01_extract_docling.py` | ⏳ Próxima etapa |
-| `02_parse_structure.py` | ⏳ Pendente |
+| `01_extract_docling.py` | ✅ Concluído |
+| `02_parse_structure.py` | ⏳ Próxima etapa |
 | `03_enrich_llm.py` | ⏳ Pendente |
 | `04_validate.py` | ⏳ Pendente |
 | `05_publish_hf.py` | ⏳ Pendente |

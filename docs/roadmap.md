@@ -5,7 +5,7 @@
 - [x] Análise dos PDFs e mapeamento da estrutura do documento
 - [x] Schema JSON formal (`schema/curriculo_schema.json`)
 - [x] Estrutura do repositório e ambiente uv
-- [ ] `01_extract_docling.py` — extração PDF → Markdown
+- [x] `01_extract_docling.py` — extração PDF → Markdown (2.762 linhas, 2,1 MB; ~2,5 min)
 - [ ] `02_parse_structure.py` — Markdown → JSONL (heurísticas)
   - [ ] Teste de estresse: Língua Portuguesa (3–5 chunks de exemplo)
   - [ ] Processamento completo do documento
