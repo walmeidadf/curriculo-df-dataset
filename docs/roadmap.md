@@ -11,13 +11,13 @@
   - [x] Processamento completo: 318 chunks, 10 componentes, 5,3% needs_review → `curriculo_parcial.jsonl`
 - [x] `03_enrich_llm.py` — enriquecimento LLM (Groq/Llama 3.3 70B): 17/17 needs_review resolvidos → `curriculo_completo.jsonl` (0 needs_review)
 - [x] `04_validate.py` — validação do schema e cobertura: 318/318 OK, todos os anos cobertos, 0 needs_review
-- [ ] `05_publish_hf.py` — publicação no HuggingFace Hub
+- [x] `05_publish_hf.py` — publicação no HuggingFace Hub: Parquet + JSONL + dataset card publicados em `walmeidadf/curriculo-ensinofundamental-df`
 
 ## Fase 2 — Dataset público
 
-- [ ] Data card completo no HuggingFace (descrição, estrutura, licença)
-- [ ] JSONL + Parquet publicados em `walmeidadf/curriculo-ensinofundamental-df`
-- [ ] README do dataset com exemplos de uso (Python / datasets library)
+- [x] Data card completo no HuggingFace (descrição, estrutura, licença, citação BibTeX)
+- [x] JSONL + Parquet publicados em `walmeidadf/curriculo-ensinofundamental-df`
+- [x] README do dataset com exemplos de uso (Python / datasets library)
 - [ ] Notebook exploratório (`notebooks/01_exploratory.ipynb`)
 
 ## Fase 3 — Interface de busca (HuggingFace Space)
