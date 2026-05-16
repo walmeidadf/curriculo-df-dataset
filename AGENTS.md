@@ -26,7 +26,7 @@ Resumo rápido (atualizar aqui a cada etapa concluída):
 | Análise dos PDFs e schema | ✅ Concluído |
 | Estrutura do repositório e ambiente | ✅ Concluído |
 | `01_extract_docling.py` | ✅ Concluído |
-| `02_parse_structure.py` | ⏳ Próxima etapa |
+| `02_parse_structure.py` | ✅ --preview aprovado / rodar completo |
 | `03_enrich_llm.py` | ⏳ Pendente |
 | `04_validate.py` | ⏳ Pendente |
 | `05_publish_hf.py` | ⏳ Pendente |
@@ -140,3 +140,64 @@ python pipeline/01_extract_docling.py
 - **Dois padrões de tabela** são descritos em detalhe em `docs/architecture.md`.
 - **Sub-bullets** com marcador `o` existem na seção de Análise linguística/semiótica do 2º Ciclo — devem ser concatenados ao item-pai.
 - **Eixos Transversais** aparecem com variações de grafia no documento — normalizar para a forma canônica do schema.
+
+---
+
+## O que o Docling gera (aprendido na sessão de extração)
+
+> Estas observações são **críticas** para o `02_parse_structure.py` e qualquer futura iteração do parser. Não reescrever sem reler.
+
+### Estrutura do Markdown (`data/extracted/curriculo_completo.md`)
+
+- **2.762 linhas, 2,1 MB.** Extraído em ~2,5 min sem GPU.
+- `paginas_pdf` não está disponível no export Markdown do Docling. Campo fica `[0]` como placeholder. Para resolver: usar `DocumentConverter.convert()` e inspecionar `result.document.pages` antes de exportar.
+
+### Padrão de headings (`##`)
+
+Apenas dois tipos de heading importam para o parser:
+
+```
+## EIXOS TRANSVERSAIS: EDUCAÇÃO PARA DIVERSIDADE/...  → atualiza eixos_transversais
+## EIXOS INTEGRADORES - <EI> <ÁREA>[- <COMP>[: <SUB>]][ Xº CICLO - Yº BLOCO]
+```
+
+Todos os outros headings são cabeçalhos de página repetitivos do Docling (ex: `## Currículo em Movimento...`) e devem ser **ignorados**.
+
+Ciclo/Bloco às vezes fica no heading inline, às vezes em linha avulsa logo abaixo:
+```
+2º CICLO - 1º BLOCO   ← linha de texto puro, não heading
+```
+
+### Padrão de tabela
+
+Cada quebra de página gera um **bloco de tabela independente** com header repetido:
+```
+| 1º ANO | 1º ANO | 2º ANO | 2º ANO | 3º ANO | 3º ANO |   ← linha 0: anos (com duplicatas OBJ/CON)
+|--------|--------|--------|--------|--------|--------|   ← linha 1: separador
+| OBJETIVOS | CONTEÚDOS | OBJETIVOS | CONTEÚDOS | ...    ← linha 2: labels (ignorar)
+| conteúdo da página...                                  ← linha 3: dados
+```
+
+Um bloco tem exatamente **uma linha de dados** (ou zero). Blocos consecutivos com a mesma estrutura de anos pertencem à mesma seção lógica.
+
+### Detecção de subeixo
+
+O subeixo aparece no **início do texto da célula OBJETIVOS**, antes do primeiro `•`:
+- `"Oralidade • item1 • item2"` → subeixo = `"Oralidade"`
+- `"com a situação e a posição do interlocutor. • item"` → **não é subeixo** (começa em minúscula ou tem ponto final)
+
+Heurística implementada em `detectar_subeixo()`:
+1. Texto antes do primeiro `•` é o subeixo **somente se**:
+   - Começa com letra **maiúscula**
+   - **Não contém ponto final** (`.`)
+   - Tem **≤ 120 caracteres**
+
+### Padrão B (3º Ciclo)
+
+O "subeixo combinado" `"Oralidade, leitura/escuta, escrita/produção textual e análise linguística/semiótica"` passa pelas heurísticas (maiúscula, sem ponto, curto), mas `subeixo_componente` é forçado a `null` para todo 3º Ciclo — correto por decisão de design.
+
+### Resultado do --preview (Língua Portuguesa)
+
+- **38 chunks** gerados para LP completa (2º e 3º Ciclo, 1º e 2º Bloco)
+- **2 needs_review** (5%) — células com conteúdo vazio em alguma coluna
+- Subeixos do 2º Ciclo encontrados: `Oralidade`, `Leitura e escuta`, `Escrita/produção de texto`, `Análise linguística/semiótica`
