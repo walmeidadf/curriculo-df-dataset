@@ -11,7 +11,7 @@ Este arquivo é a fonte primária de contexto para qualquer agente IA (Claude Co
 **Público-alvo do dataset:** professoras e pesquisadores da educação pública do DF e comunidade de desenvolvedores de NLP/EdTech no HuggingFace.
 
 **Repositório git:** `git@github.com:walmeidadf/curriculo-df-dataset.git`  
-**Dataset HF:** `walmeidadf/curriculo-em-movimento-df`
+**Dataset HF:** `walmeidadf/curriculo-ensinofundamental-df`
 
 ---
 

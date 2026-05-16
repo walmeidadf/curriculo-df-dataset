@@ -33,7 +33,7 @@ dependencies = [
 
 [project.urls]
 Homepage       = "https://github.com/walmeidadf/curriculo-df-dataset"
-"HF Dataset"   = "https://huggingface.co/datasets/walmeidadf/curriculo-em-movimento-df"
+"HF Dataset"   = "https://huggingface.co/datasets/walmeidadf/curriculo-ensinofundamental-df"
 Issues         = "https://github.com/walmeidadf/curriculo-df-dataset/issues"
 
 [dependency-groups]

@@ -16,7 +16,7 @@
 ## Fase 2 — Dataset público
 
 - [ ] Data card completo no HuggingFace (descrição, estrutura, licença)
-- [ ] JSONL + Parquet publicados em `walmeidadf/curriculo-em-movimento-df`
+- [ ] JSONL + Parquet publicados em `walmeidadf/curriculo-ensinofundamental-df`
 - [ ] README do dataset com exemplos de uso (Python / datasets library)
 - [ ] Notebook exploratório (`notebooks/01_exploratory.ipynb`)
 

@@ -3,7 +3,7 @@
 > Dataset público e curado do **Currículo em Movimento do Distrito Federal – Ensino Fundamental** (Anos Iniciais e Anos Finais), 2ª edição, publicado pela Secretaria de Estado de Educação do Distrito Federal (SEEDF).
 
 [![Licença: MIT](https://img.shields.io/badge/Licença-MIT-blue.svg)](LICENSE)
-[![HuggingFace Dataset](https://img.shields.io/badge/🤗%20HuggingFace-Dataset-yellow)](https://huggingface.co/datasets/walmeidadf/curriculo-em-movimento-df)
+[![HuggingFace Dataset](https://img.shields.io/badge/🤗%20HuggingFace-Dataset-yellow)](https://huggingface.co/datasets/walmeidadf/curriculo-ensinofundamental-df)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-green.svg)](https://www.python.org/)
 
 ---
@@ -18,7 +18,7 @@ O **Currículo em Movimento do DF** orienta o trabalho pedagógico das escolas p
 - **Ano escolar** (1º ao 9º Ano)
 - **Subeixo** (Oralidade, Leitura e escuta, Escrita/produção de texto, Análise linguística/semiótica etc. — apenas Anos Iniciais)
 
-Este repositório contém o pipeline de extração (PDF → JSONL/Parquet) e o dataset resultante, disponível também no [HuggingFace Hub](https://huggingface.co/datasets/walmeidadf/curriculo-em-movimento-df).
+Este repositório contém o pipeline de extração (PDF → JSONL/Parquet) e o dataset resultante, disponível também no [HuggingFace Hub](https://huggingface.co/datasets/walmeidadf/curriculo-ensinofundamental-df).
 
 ---
 
@@ -111,7 +111,7 @@ cp .env.example .env
 ```python
 from datasets import load_dataset
 
-ds = load_dataset("walmeidadf/curriculo-em-movimento-df")
+ds = load_dataset("walmeidadf/curriculo-ensinofundamental-df")
 
 # Filtrar por ano escolar
 primeiro_ano = ds["train"].filter(lambda r: r["ano_escolar"] == "1º Ano")
@@ -180,7 +180,7 @@ python pipeline/05_publish_hf.py
   title     = {Currículo em Movimento do Distrito Federal – Ensino Fundamental: Dataset Estruturado},
   year      = {2026},
   publisher = {HuggingFace},
-  url       = {https://huggingface.co/datasets/walmeidadf/curriculo-em-movimento-df},
+  url       = {https://huggingface.co/datasets/walmeidadf/curriculo-ensinofundamental-df},
   note      = {Baseado em: SEEDF. Currículo em Movimento do Distrito Federal – Ensino Fundamental. 2ª ed. Brasília: SEEDF, 2018.}
 }
 ```
