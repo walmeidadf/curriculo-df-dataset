@@ -30,7 +30,7 @@ Resumo rápido (atualizar aqui a cada etapa concluída):
 | `03_enrich_llm.py` | ✅ Concluído (17/17 enriquecidos via Groq/Llama 3.3 70B) |
 | `04_validate.py` | ✅ Concluído (318/318 OK, cobertura 100%) |
 | `05_publish_hf.py` | ✅ Concluído (Parquet + JSONL + card publicados) |
-| Gradio Space (`06_gradio_space.py`) | ⏳ Próxima etapa |
+| Gradio Space (`06_gradio_space.py`) | ✅ Concluído (Space publicado em HuggingFace) |
 
 ---
 

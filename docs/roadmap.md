@@ -22,10 +22,13 @@
 
 ## Fase 3 — Interface de busca (HuggingFace Space)
 
-- [ ] Gradio Space `walmeidadf/curriculo-df-busca`
-- [ ] Busca por componente, ciclo, bloco, ano e palavra-chave
-- [ ] Filtro por tipo de registro (objetivos / conteúdos)
-- [ ] Exportação de seleção em CSV
+- [x] Gradio Space `walmeidadf/curriculo-ensinofundamental-df` — deploy concluído em https://huggingface.co/spaces/walmeidadf/curriculo-ensinofundamental-df
+- [x] Busca por palavra-chave (objetivos + conteúdos) com atualização automática
+- [x] Filtros: componente curricular, ciclo, bloco, ano escolar
+- [x] Resultado em tabela com objetivos e conteúdos expandíveis (wrap)
+- [x] Exportação da seleção em CSV (UTF-8 com BOM para Excel)
+- [x] `pipeline/06_gradio_space.py` — script de deploy reutilizável
+- [x] Arquivos do Space versionados em `space/` (app.py, requirements.txt, README.md)
 
 ## Notas de escopo
 
