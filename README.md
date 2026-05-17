@@ -3,7 +3,8 @@
 > Dataset público e curado do **Currículo em Movimento do Distrito Federal – Ensino Fundamental** (Anos Iniciais e Anos Finais), 2ª edição, publicado pela Secretaria de Estado de Educação do Distrito Federal (SEEDF).
 
 [![Licença: MIT](https://img.shields.io/badge/Licença-MIT-blue.svg)](LICENSE)
-[![HuggingFace Dataset](https://img.shields.io/badge/🤗%20HuggingFace-Dataset-yellow)](https://huggingface.co/datasets/walmeidadf/curriculo-ensinofundamental-df)
+[![HuggingFace Dataset](https://img.shields.io/badge/🤗%20Dataset-walmeidadf/curriculo--ensinofundamental--df-yellow)](https://huggingface.co/datasets/walmeidadf/curriculo-ensinofundamental-df)
+[![HuggingFace Space](https://img.shields.io/badge/🤗%20Space-busca%20interativa-orange)](https://huggingface.co/spaces/walmeidadf/curriculo-ensinofundamental-df)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-green.svg)](https://www.python.org/)
 
 ---
@@ -18,7 +19,16 @@ O **Currículo em Movimento do DF** orienta o trabalho pedagógico das escolas p
 - **Ano escolar** (1º ao 9º Ano)
 - **Subeixo** (Oralidade, Leitura e escuta, Escrita/produção de texto, Análise linguística/semiótica etc. — apenas Anos Iniciais)
 
-Este repositório contém o pipeline de extração (PDF → JSONL/Parquet) e o dataset resultante, disponível também no [HuggingFace Hub](https://huggingface.co/datasets/walmeidadf/curriculo-ensinofundamental-df).
+Este repositório contém o pipeline completo de extração (PDF → JSONL/Parquet), o dataset resultante publicado no HuggingFace Hub e uma interface de busca interativa via Gradio Space.
+
+---
+
+## Acesso rápido
+
+| Recurso | Link |
+|---------|------|
+| Dataset (Parquet + JSONL) | [huggingface.co/datasets/walmeidadf/curriculo-ensinofundamental-df](https://huggingface.co/datasets/walmeidadf/curriculo-ensinofundamental-df) |
+| Interface de busca | [huggingface.co/spaces/walmeidadf/curriculo-ensinofundamental-df](https://huggingface.co/spaces/walmeidadf/curriculo-ensinofundamental-df) |
 
 ---
 
@@ -27,26 +37,34 @@ Este repositório contém o pipeline de extração (PDF → JSONL/Parquet) e o d
 ```
 curriculo-ensinofundamental-df/
 ├── data/
-│   ├── pdf/          # PDFs originais da SEEDF (não modificados)
-│   ├── extracted/    # Markdown gerado pelo Docling
-│   └── processed/    # JSONL e Parquet finais
+│   ├── pdf/
+│   │   └── Ensino Fundamental DF.pdf    # PDF original da SEEDF (305 pág., 12 MB)
+│   ├── extracted/
+│   │   └── curriculo_completo.md        # Markdown gerado pelo Docling (~2,1 MB)
+│   ├── processed/
+│   │   └── curriculo_completo.jsonl     # Dataset final (318 registros, 0 needs_review)
+│   └── dataset_card.md                  # Fonte do README publicado no HuggingFace
 ├── pipeline/
-│   ├── 01_extract_docling.py   # PDF → Markdown
-│   ├── 02_parse_structure.py   # Markdown → JSON (heurísticas)
-│   ├── 03_enrich_llm.py        # Enriquecimento via Groq/Llama
-│   ├── 04_validate.py          # Validação de schema
-│   └── 05_publish_hf.py        # Upload para HuggingFace
+│   ├── 01_extract_docling.py            # PDF → Markdown
+│   ├── 02_parse_structure.py            # Markdown → JSONL (heurísticas)
+│   ├── 03_enrich_llm.py                 # Enriquecimento via Groq/Llama 3.3 70B
+│   ├── 04_validate.py                   # Validação de schema e cobertura
+│   ├── 05_publish_hf.py                 # Upload dataset para HuggingFace Hub
+│   └── 06_gradio_space.py               # Deploy do Gradio Space
+├── space/
+│   ├── app.py                           # Código do Gradio Space
+│   ├── requirements.txt                 # Dependências do Space
+│   └── README.md                        # Metadados do Space (YAML front matter)
 ├── schema/
-│   └── curriculo_schema.json   # JSON Schema formal com exemplos
+│   └── curriculo_schema.json            # JSON Schema formal com exemplos
 ├── docs/
-│   ├── architecture.md         # Arquitetura do pipeline
-│   ├── roadmap.md              # Roadmap de desenvolvimento
-│   └── decisions.md            # Decisões de arquitetura (ADRs)
-├── notebooks/
-│   └── 01_exploratory.ipynb    # Análise exploratória
-├── AGENTS.md                   # Guia para agentes IA
-├── pyproject.toml              # Dependências (gerenciadas com uv)
-└── .env.example                # Variáveis de ambiente necessárias
+│   ├── architecture.md                  # Arquitetura do pipeline
+│   ├── roadmap.md                       # Roadmap de desenvolvimento
+│   └── decisions.md                     # Decisões de arquitetura (ADRs)
+├── AGENTS.md                            # Guia para agentes IA
+├── pyproject.toml                       # Dependências (gerenciadas com uv)
+├── uv.lock                              # Lock file para reprodutibilidade exata
+└── .env.example                         # Variáveis de ambiente necessárias
 ```
 
 ---
@@ -69,8 +87,8 @@ Cada linha do dataset JSONL segue este schema (resumido):
   "ano_escolar": "1º Ano",
   "eixos_transversais": ["Educação para a Diversidade", "..."],
   "eixos_integradores": ["Alfabetização", "Letramentos", "Ludicidade"],
-  "objetivos": ["• objetivo 1", "• objetivo 2"],
-  "conteudos": ["• conteúdo 1", "• conteúdo 2"],
+  "objetivos": ["item 1", "item 2"],
+  "conteudos": ["item 1", "item 2"],
   "texto_livre": null,
   "paginas_pdf": [23, 24],
   "fonte": "Currículo em Movimento do Distrito Federal – Ensino Fundamental, 2ª edição, SEEDF"
@@ -128,7 +146,7 @@ matematica = ds["train"].filter(
 ```python
 import json
 
-with open("data/processed/curriculo_final.jsonl") as f:
+with open("data/processed/curriculo_completo.jsonl") as f:
     registros = [json.loads(linha) for linha in f]
 
 # Filtrar por subeixo
@@ -138,6 +156,8 @@ oralidade = [r for r in registros if r["subeixo_componente"] == "Oralidade"]
 ---
 
 ## Executar o pipeline
+
+O pipeline é reproduzível: a partir do PDF original, qualquer pessoa com as chaves de API consegue gerar o dataset do zero.
 
 ```bash
 # Ativar ambiente
@@ -155,11 +175,14 @@ python pipeline/02_parse_structure.py
 # Etapa 3 — Enriquecimento LLM (requer GROQ_API_KEY no .env)
 python pipeline/03_enrich_llm.py
 
-# Etapa 4 — Validação
+# Etapa 4 — Validação de schema e cobertura
 python pipeline/04_validate.py
 
-# Etapa 5 — Publicação (requer HF_TOKEN no .env)
+# Etapa 5 — Publicação do dataset (requer HF_TOKEN no .env)
 python pipeline/05_publish_hf.py
+
+# Etapa 6 — Deploy do Gradio Space (requer HF_TOKEN no .env)
+python pipeline/06_gradio_space.py
 ```
 
 ---

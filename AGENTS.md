@@ -42,8 +42,8 @@ Resumo rápido (atualizar aqui a cada etapa concluída):
 | `docs/architecture.md` | Diagrama do pipeline, dois padrões de tabela (A e B), estratégia de extração |
 | `docs/decisions.md` | ADRs — decisões já tomadas (não reabrir sem motivo) |
 | `docs/roadmap.md` | O que está feito e o que falta |
-| `data/pdf/port-ens-fund.pdf` | Amostra dos PDFs: Língua Portuguesa completa (páginas 17–56) |
-| `data/pdf/pagina_exemplo_curriculo.pdf` | Página de Arte: Artes Visuais (Padrão B, 3º Ciclo) |
+| `data/pdf/Ensino Fundamental DF.pdf` | PDF original da SEEDF (305 pág., 12 MB) — fonte primária do pipeline |
+| `data/extracted/curriculo_completo.md` | Markdown gerado pelo Docling — base para o parser (2.762 linhas) |
 
 ---
 
@@ -136,8 +136,7 @@ python pipeline/01_extract_docling.py
 
 ## Observações sobre o documento
 
-- **PDF principal:** `data/pdf/Ensino Fundamental DF.pdf` (12 MB, 305 páginas) — use este no pipeline.
-- **PDFs menores em `data/pdf/`:** foram criados para análise prévia — `port-ens-fund.pdf` (LP completa), `pagina_exemplo_curriculo.pdf` (Arte, 1 página).
+- **PDF principal:** `data/pdf/Ensino Fundamental DF.pdf` (12 MB, 305 páginas) — único PDF no repositório; use este no pipeline.
 - **Dois padrões de tabela** são descritos em detalhe em `docs/architecture.md`.
 - **Sub-bullets** com marcador `o` existem na seção de Análise linguística/semiótica do 2º Ciclo — devem ser concatenados ao item-pai.
 - **Eixos Transversais** aparecem com variações de grafia no documento — normalizar para a forma canônica do schema.

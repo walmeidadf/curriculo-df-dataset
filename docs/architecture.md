@@ -3,31 +3,31 @@
 ## Visão geral
 
 ```
-data/pdf/                         data/extracted/            data/processed/
-Ensino Fundamental DF.pdf  ──►  curriculo_ef.md  ──►  curriculo_parcial.jsonl
-                                                              │
-                                                    (needs_review=True)
-                                                              │
-                                                     Groq API (Llama 3.3 70B)
-                                                              │
-                                                    curriculo_final.jsonl
-                                                              │
-                                                         Validação
-                                                              │
-                                                    HuggingFace Hub
-                                                    ├── dataset.jsonl
-                                                    └── dataset.parquet
+data/pdf/                          data/extracted/               data/processed/
+Ensino Fundamental DF.pdf  ──►  curriculo_completo.md  ──►  curriculo_completo.jsonl
+                                                                      │
+                                                          (needs_review=True → Groq)
+                                                                      │
+                                                               Validação (04)
+                                                                      │
+                                                         HuggingFace Hub (05)
+                                                         ├── dataset.jsonl
+                                                         └── dataset.parquet
+                                                                      │
+                                                         Gradio Space (06)
+                                                         └── busca interativa
 ```
 
 ## Scripts do pipeline
 
 | Script | Entrada | Saída | Tecnologia |
 |--------|---------|-------|------------|
-| `pipeline/01_extract_docling.py` | PDF original (12 MB) | `data/extracted/curriculo_ef.md` | Docling |
-| `pipeline/02_parse_structure.py` | Markdown extraído | `data/processed/curriculo_parcial.jsonl` | Python (regex + state machine) |
+| `pipeline/01_extract_docling.py` | PDF original (12 MB) | `data/extracted/curriculo_completo.md` | Docling |
+| `pipeline/02_parse_structure.py` | Markdown extraído | `data/processed/curriculo_completo.jsonl` | Python (regex + state machine) |
 | `pipeline/03_enrich_llm.py` | Registros com `needs_review=True` | Registros corrigidos no JSONL | Groq / Llama 3.3 70B |
 | `pipeline/04_validate.py` | JSONL completo | Relatório de cobertura + JSONL limpo | jsonschema |
 | `pipeline/05_publish_hf.py` | JSONL validado | Dataset no HuggingFace Hub | datasets + huggingface_hub |
+| `pipeline/06_gradio_space.py` | `space/` (app.py, requirements.txt, README.md) | Gradio Space no HuggingFace | huggingface_hub |
 
 ## Estratégia de extração em dois estágios
 
